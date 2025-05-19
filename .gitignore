@@ -1,0 +1,71 @@
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+app/release/
+app/debug/
+
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/OS Files
+*.log
+*.hprof
+*.pyc
+.navigation/
+*.swp
+*.keystore
+
+# Android Studio files
+.idea/
+*.iml
+*.iws
+*.ipr
+.nvs/
+.cxx/
+captures/
+android/libs/
+android/keystores/
+
+# IntelliJ project files
+**/workspace.xml
+**/tasks.xml
+**/shelf/
+
+# Gradle cache
+.gradletasknamecache
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Editor/IDE temp files
+*.kdev4
+.idea/
+.vscode/
+*.swp
+*.swn
+*.swo
+*~
+
+# Firebase/Google Services (if not checked in)
+google-services.json
+google-services.json.enc

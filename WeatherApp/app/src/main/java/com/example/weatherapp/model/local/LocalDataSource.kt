@@ -4,14 +4,15 @@ import com.example.weatherapp.model.pojos.WeatherResponse
 
 class LocalDataSource(private val weatherDao: WeatherDao) {
     suspend fun saveWeatherResponse(response: WeatherResponse) {
-        weatherDao.insertWeatherResponse(response)
+        weatherDao.insertHourlyForecastFourDays(response)
     }
 
     suspend fun getWeatherResponse(): WeatherResponse? {
-        return weatherDao.getLatestWeatherResponse()
+        return weatherDao.getHourlyForecastFourDays()
     }
 
     suspend fun clearWeatherResponse() {
-        weatherDao.clearWeatherResponse()
+        weatherDao.clearHourlyForecastFourDays()
     }
+
 }

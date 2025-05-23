@@ -9,11 +9,12 @@ import com.example.weatherapp.model.pojos.WeatherResponse
 @Dao
 interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWeatherResponse(response: WeatherResponse)
+    suspend fun insertHourlyForecastFourDays(response: WeatherResponse)
 
     @Query("SELECT * FROM weather_response ORDER BY id DESC LIMIT 1")
-    suspend fun getLatestWeatherResponse(): WeatherResponse?
+    suspend fun getHourlyForecastFourDays(): WeatherResponse?
 
     @Query("DELETE FROM weather_response")
-    suspend fun clearWeatherResponse()
+    suspend fun clearHourlyForecastFourDays()
+
 }

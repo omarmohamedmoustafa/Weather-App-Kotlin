@@ -15,15 +15,15 @@ data class WeatherResponse(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @SerializedName("cod") val cod: String,
     @SerializedName("message") val message: Int,
-    @SerializedName("cnt") val cnt: Int,
+    @SerializedName("cnt") val numberOfHours: Int,
     @SerializedName("list") val list: List<WeatherData>,
     @SerializedName("city") val city: City
 ) : Parcelable
 
 @Parcelize
 data class WeatherData(
-    @SerializedName("dt") val dt: Long,
-    @SerializedName("main") val main: Main,
+    @SerializedName("dt") val unixTimeStamp: Long,
+    @SerializedName("main") val weatherDataOfHour: WeatherDataOfHour,
     @SerializedName("weather") val weather: List<Weather>,
     @SerializedName("clouds") val clouds: Clouds,
     @SerializedName("wind") val wind: Wind,
@@ -34,7 +34,7 @@ data class WeatherData(
 ) : Parcelable
 
 @Parcelize
-data class Main(
+data class WeatherDataOfHour(
     @SerializedName("temp") val temp: Float,
     @SerializedName("feels_like") val feelsLike: Float,
     @SerializedName("temp_min") val tempMin: Float,
@@ -49,8 +49,8 @@ data class Main(
 @Parcelize
 data class Weather(
     @SerializedName("id") val id: Int,
-    @SerializedName("main") val main: String,
-    @SerializedName("description") val description: String,
+    @SerializedName("main") val weatherStatusOfHour: String,
+    @SerializedName("description") val weatherDescriptionOfHour: String,
     @SerializedName("icon") val icon: String
 ) : Parcelable
 

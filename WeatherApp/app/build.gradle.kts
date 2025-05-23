@@ -66,4 +66,12 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation ("com.google.android.material:material:1.9.0")
+    implementation ("androidx.recyclerview:recyclerview:1.4.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:2.1.20")
+
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation ("org.osmdroid:osmdroid-android:6.1.13")
+
 }

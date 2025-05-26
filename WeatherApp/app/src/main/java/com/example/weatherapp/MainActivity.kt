@@ -5,9 +5,10 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import androidx.annotation.RequiresPermission
+import android.view.View.GONE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -15,37 +16,38 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.weatherapp.databinding.ActivityMainBinding
 import com.example.weatherapp.model.local.LocalDataSource
-import com.example.weatherapp.model.local.WeatherDao
-import com.example.weatherapp.model.local.WeatherDatabase
+import com.example.weatherapp.model.local.fav_local.FavCountriesDatabase
+import com.example.weatherapp.model.local.weather_local.WeatherDatabase
 import com.example.weatherapp.model.location.LocationHelper
 import com.example.weatherapp.model.remote.RemoteDataSource
-import com.example.weatherapp.model.repository.WeatherRepository
+import com.example.weatherapp.model.repository.WeatherAppRepository
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import android.preference.PreferenceManager
+import androidx.annotation.RequiresPermission
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    lateinit var weatherRepository: WeatherRepository // Expose to fragments
-    lateinit var locationHelper: LocationHelper // Expose to fragments
-    private lateinit var weatherDao: WeatherDao
-    private lateinit var localDataSource: LocalDataSource
+    lateinit var weatherRepository: WeatherAppRepository
+    lateinit var locationHelper: LocationHelper
     private val LOCATION_PERMISSION_CODE = 1
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Initialize WeatherDao and dependencies
-        weatherDao = WeatherDatabase.getDatabase(this).weatherDao()
-        localDataSource = LocalDataSource(weatherDao)
-        val remoteDataSource = RemoteDataSource()
-        weatherRepository = WeatherRepository.getInstance(
-            remoteDataSource = remoteDataSource,
-            localDataSource = localDataSource
+        weatherRepository = WeatherAppRepository.getInstance(
+            remoteDataSource = RemoteDataSource(),
+            localDataSource = LocalDataSource(
+                WeatherDatabase.getDatabase(this).weatherDao(),
+                FavCountriesDatabase.getDatabase(this).favDao()
+            )
         )
 
         // Initialize LocationHelper
         locationHelper = LocationHelper(this) { latitude, longitude, _ ->
-            // This callback can be used for logging or other purposes
             Log.d("MainActivity", "Location updated: Lat=$latitude, Lon=$longitude")
         }
 
@@ -55,15 +57,13 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
-        }
+        // Initialize FAB as hidden by default
+        binding.appBarMain.fab.visibility = GONE
 
         val drawerLayout = binding.drawerLayout
         val navView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController = findNavController(R.id.nav_host_fragment_content_main)
+
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.nav_home, R.id.nav_settings, R.id.nav_favourites, R.id.nav_alerts),
             drawerLayout
@@ -71,7 +71,19 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        // Check and request location permissions
+        // Set up the navigation graph with the default start destination
+        navController.setGraph(R.navigation.mobile_navigation)
+
+        // Check SharedPreferences for saved location and navigate accordingly
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val latitude = sharedPreferences.getFloat("home_latitude", 0f)
+        val longitude = sharedPreferences.getFloat("home_longitude", 0f)
+
+        if (latitude != 0f && longitude != 0f) {
+            navController.navigate(R.id.action_initialSetup_to_nav_home)
+        }
+
+        // Check and request location permissions (still needed for other fragments like MapFragment)
         if (!locationHelper.hasLocationPermissions()) {
             ActivityCompat.requestPermissions(
                 this,
@@ -79,6 +91,11 @@ class MainActivity : AppCompatActivity() {
                 LOCATION_PERMISSION_CODE
             )
         }
+    }
+
+    // Expose FAB for fragments to control
+    fun getFab(): FloatingActionButton {
+        return binding.appBarMain.fab
     }
 
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
@@ -96,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             Snackbar.make(
                 binding.root,
-                "Location permissions denied. Using default location.",
+                "Location permissions denied. Some features may not work.",
                 Snackbar.LENGTH_LONG
             ).show()
         }
@@ -108,7 +125,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 

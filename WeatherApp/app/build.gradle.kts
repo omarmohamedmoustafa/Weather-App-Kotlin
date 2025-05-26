@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.weatherapp"
-        minSdk = 31
+        minSdk = 28
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.mediarouter)
+    implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,5 +75,8 @@ dependencies {
 
     implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation ("org.osmdroid:osmdroid-android:6.1.13")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation ("com.squareup.picasso:picasso:2.71828")
 
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

@@ -69,3 +69,6 @@ Thumbs.db
 # Firebase/Google Services (if not checked in)
 google-services.json
 google-services.json.enc
+
+# Key file
+ApiKey.kt

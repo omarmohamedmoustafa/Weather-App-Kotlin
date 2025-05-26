@@ -2,24 +2,26 @@ package com.example.weatherapp.model.repository
 
 import com.example.weatherapp.model.local.LocalDataSource
 import com.example.weatherapp.model.pojos.CurrentWeatherResponse
+import com.example.weatherapp.model.pojos.FavouriteCountry
 import com.example.weatherapp.model.pojos.WeatherResponse
 import com.example.weatherapp.model.remote.RemoteDataSource
 
-class WeatherRepository(
+
+class WeatherAppRepository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) {
-    //singleton implementation
+    // Singleton implementation
     companion object {
         @Volatile
-        private var instance: WeatherRepository? = null
+        private var instance: WeatherAppRepository? = null
 
         fun getInstance(
             remoteDataSource: RemoteDataSource,
             localDataSource: LocalDataSource
-        ): WeatherRepository {
+        ): WeatherAppRepository {
             return instance ?: synchronized(this) {
-                instance ?: WeatherRepository(remoteDataSource, localDataSource).also { instance = it }
+                instance ?: WeatherAppRepository(remoteDataSource, localDataSource).also { instance = it }
             }
         }
     }
@@ -65,8 +67,38 @@ class WeatherRepository(
             units = units,
             language = language
         )
-        // I don't need to fallback to local data for current weather. I need to show the data fetched from the API
-        // even if it is not successful. So I will return the remote result directly.
-        return remoteResult
+        if (remoteResult.isSuccess) {
+            remoteResult.getOrNull()?.let { localDataSource.insertCurrentWeatherResponse(it) }
+            return remoteResult
+        }
+        // Fallback to local data if network fails
+        val localData = localDataSource.getCurrentWeatherResponse()
+        return if (localData != null) {
+            Result.success(localData)
+        } else {
+            remoteResult
+        }
     }
+
+    @androidx.annotation.RequiresPermission(
+        allOf = [android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION]
+    )
+
+    suspend fun clearWeatherResponse() {
+        localDataSource.clearWeatherResponse()
+    }
+    suspend fun clearCurrentWeatherResponse() {
+        localDataSource.clearCurrentWeatherResponse()
+    }
+
+    suspend fun insertFavouriteCountry(country: FavouriteCountry) {
+        localDataSource.insertFavouriteCountry(country)
+    }
+    suspend fun getAllFavouriteCountries(): List<FavouriteCountry>{
+        return localDataSource.getAllFavouriteCountries()
+    }
+    suspend fun deleteFavouriteCountry(countryName: String, countryLatitude: Float, countryLongitude: Float){
+        localDataSource.deleteFavouriteCountry(countryName, countryLatitude, countryLongitude)
+    }
+
 }

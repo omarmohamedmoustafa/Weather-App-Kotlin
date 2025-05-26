@@ -5,10 +5,24 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="background">#F5F7FA</color>
-    <color name="textPrimary">#212121</color>
-    <color name="textSecondary">#757575</color>
-    <color name="cardBackground">#FFFFFF</color>
+    <color name="sun_yellow_primary">#FFD966</color>       <!-- Sun yellow -->
+    <color name="sunset_orange_secondary">#FF914D</color>  <!-- Warm sunset orange -->
+
+    <!-- Accent & Backgrounds -->
+    <color name="sky_blue_accent">#AEE1F9</color>          <!-- Light sky blue -->
+    <color name="background">#FFF8E7</color>               <!-- Creamy beige -->
+    <color name="cardBackground">#FFFFFF</color>           <!-- Card white -->
+
+    <!-- Text Colors -->
+    <color name="textPrimary">#3E2723</color>              <!-- Deep brown for contrast -->
+    <color name="textSecondary">#8D6E63</color>            <!-- Soft brown -->
+
+    <!-- Supporting Colors -->
+    <color name="sunglasses_black">#2E2E2E</color>         <!-- Sunglasses dark tone -->
+    <color name="white">#FFFFFFFF</color>                  <!-- Default white -->
+    <color name="black">#FF000000</color>                  <!-- Default black -->
+
+    <!-- Additional colors (unchanged) -->
+    <color name="gray">#2E2E2E</color>
+    <color name="brown">#8D6E63</color>
 </resources>

@@ -1,13 +1,14 @@
-package com.example.weatherapp.model.local
+package com.example.weatherapp.model.local.weather_local
 
-import androidx.room.Database
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.weatherapp.model.pojos.CurrentWeatherResponse
 import com.example.weatherapp.model.pojos.WeatherResponse
 
-@Database(entities = [WeatherResponse::class], version = 1, exportSchema = false)
+@Database(entities = [WeatherResponse::class, CurrentWeatherResponse::class], version = 1, exportSchema = false)
 @TypeConverters(WeatherTypeConverters::class)
 abstract class WeatherDatabase : RoomDatabase() {
     abstract fun weatherDao(): WeatherDao

@@ -32,32 +32,62 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="4dp"
                     android:background="@color/cardBackground">
 
-                    <!-- All your existing current weather views go here -->
-                    <TextView
-                        android:id="@+id/tvCity"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/cityAndLastUpdate"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvDateTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="4dp"
                         android:layout_marginTop="4dp"
-                        android:textColor="@color/textPrimary"
-                        android:textSize="16sp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/ivWeatherIcon"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvCity" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <!-- City Name on the Left -->
+                        <TextView
+                            android:id="@+id/tvCity"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/textPrimary"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <!-- Last Update and DateTime on the Right -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="16dp">
+
+                            <TextView
+                                android:id="@+id/lastUpdate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/last_update"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/tvDateTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textPrimary"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- All your existing current weather views go here -->
 
                     <TextView
                         android:id="@+id/tvTemperature"
@@ -66,10 +96,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:textColor="@color/textPrimary"
-                        android:textSize="48sp"
+                        android:textSize="32sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvDateTime" />
+                        app:layout_constraintTop_toBottomOf="@id/cityAndLastUpdate" />
 
                     <TextView
                         android:id="@+id/tvWeatherDescription"
@@ -82,16 +112,16 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvTemperature" />
 
+                    <!-- Weather Details Section -->
                     <ImageView
                         android:id="@+id/ivWeatherIcon"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="75dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="76dp"
+                        android:layout_marginEnd="76dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <!-- Weather Details Section -->
                     <LinearLayout
                         android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
@@ -99,8 +129,8 @@
                         android:layout_marginTop="16dp"
                         android:orientation="horizontal"
                         android:weightSum="4"
-                        app:layout_constraintTop_toBottomOf="@id/tvWeatherDescription"
-                        tools:layout_editor_absoluteX="16dp">
+                        app:layout_constraintTop_toBottomOf="@id/ivWeatherIcon"
+                        >
 
                         <!-- Humidity -->
                         <LinearLayout
@@ -110,22 +140,41 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/tvHumidityLabel"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="HUMIDITY"
-                                android:textAllCaps="true"
-                                android:textColor="@color/textPrimary"
-                                android:textSize="12sp" />
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:elevation="4dp"
+                                android:layout_margin="4dp"
+                                app:cardCornerRadius="16dp"
 
-                            <TextView
-                                android:id="@+id/tvHumidity"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:textColor="@color/textPrimary"
-                                android:textSize="16sp" />
+                                android:backgroundTint="@color/background"
+                                >
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:layout_margin="5dp"
+
+                                    android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/tvHumidityLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="@string/humidity"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="16dp" />
+
+                                <TextView
+                                    android:id="@+id/tvHumidity"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:textColor="@color/textPrimary"
+                                    android:textSize="16dp" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
                         </LinearLayout>
 
                         <!-- Wind -->
@@ -135,15 +184,30 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:cardCornerRadius="16dp"
 
+                                android:elevation="4dp"
+                                android:layout_margin="4dp"
+                                android:backgroundTint="@color/background"
+                                >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:layout_margin="5dp"
+
+                                android:orientation="vertical">
                             <TextView
                                 android:id="@+id/tvWindSpeedLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="WIND"
+                                android:text="@string/wind_speed"
                                 android:textAllCaps="true"
                                 android:textColor="@color/textPrimary"
-                                android:textSize="12sp" />
+                                android:textSize="16dp" />
 
                             <TextView
                                 android:id="@+id/tvWindSpeed"
@@ -151,7 +215,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:textColor="@color/textPrimary"
-                                android:textSize="16sp" />
+                                android:textSize="16dp" />
+                            </LinearLayout>
+                            </androidx.cardview.widget.CardView>
                         </LinearLayout>
 
                         <!-- Pressure -->
@@ -161,15 +227,30 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:elevation="4dp"
+                                app:cardCornerRadius="16dp"
 
+                                android:layout_margin="4dp"
+                                android:backgroundTint="@color/background"
+                                >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:layout_margin="5dp"
+
+                                android:orientation="vertical">
                             <TextView
                                 android:id="@+id/tvPressureLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="PRESSURE"
+                                android:text="@string/pressure"
                                 android:textAllCaps="true"
                                 android:textColor="@color/textPrimary"
-                                android:textSize="12sp" />
+                                android:textSize="16dp" />
 
                             <TextView
                                 android:id="@+id/tvPressure"
@@ -177,7 +258,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:textColor="@color/textPrimary"
-                                android:textSize="16sp" />
+                                android:textSize="16dp" />
+                            </LinearLayout>
+                            </androidx.cardview.widget.CardView>
                         </LinearLayout>
 
                         <!-- Clouds -->
@@ -187,15 +270,30 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:elevation="4dp"
+                                android:layout_margin="4dp"
+                                app:cardCornerRadius="16dp"
 
+                                android:backgroundTint="@color/background"
+                                >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:layout_margin="5dp"
+                                >
                             <TextView
                                 android:id="@+id/tvCloudsLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="CLOUDS"
+                                android:text="@string/clouds"
                                 android:textAllCaps="true"
                                 android:textColor="@color/textPrimary"
-                                android:textSize="12sp" />
+                                android:textSize="16dp" />
 
                             <TextView
                                 android:id="@+id/tvClouds"
@@ -203,7 +301,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:textColor="@color/textPrimary"
-                                android:textSize="16sp" />
+                                android:textSize="16dp" />
+                            </LinearLayout>
+                            </androidx.cardview.widget.CardView>
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -230,9 +330,9 @@
                         android:id="@+id/tvHourlyForecastLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="HOURLY FORECAST"
+                        android:text="@string/hourly_forecast"
                         android:textColor="@color/textPrimary"
-                        android:textSize="14sp"
+                        android:textSize="20sp"
                         android:textAllCaps="true"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -269,9 +369,9 @@
                         android:id="@+id/tvDailyForecastLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="4-DAY FORECAST"
+                        android:text="@string/four_day_forecast"
                         android:textColor="@color/textPrimary"
-                        android:textSize="14sp"
+                        android:textSize="20sp"
                         android:textAllCaps="true"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

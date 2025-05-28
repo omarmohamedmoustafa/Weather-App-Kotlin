@@ -4,12 +4,12 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.example.weatherapp.model.local.weather_local.WeatherTypeConverters
+import com.example.weatherapp.model.local.WeatherAppTypeConverters
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "weather_response")
-@TypeConverters(WeatherTypeConverters::class)
+@TypeConverters(WeatherAppTypeConverters::class)
 @Parcelize
 data class WeatherResponse(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
@@ -37,8 +37,8 @@ data class WeatherData(
 data class WeatherDataOfHour(
     @SerializedName("temp") val temp: Float,
     @SerializedName("feels_like") val feelsLike: Float,
-    @SerializedName("temp_min") val tempMin: Float,
-    @SerializedName("temp_max") val tempMax: Float,
+    @SerializedName("temp_min") val tempMin: Double,
+    @SerializedName("temp_max") val tempMax: Double,
     @SerializedName("pressure") val pressure: Int,
     @SerializedName("sea_level") val seaLevel: Int,
     @SerializedName("grnd_level") val grndLevel: Int,

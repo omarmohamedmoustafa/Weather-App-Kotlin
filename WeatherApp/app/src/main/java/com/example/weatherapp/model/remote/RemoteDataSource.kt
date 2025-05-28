@@ -6,8 +6,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class RemoteDataSource {
-    suspend fun getWeatherForecast(
+class RemoteDataSource : IRemoteDataSource {
+    override suspend fun getWeatherForecast(
         latitude: Float,
         longitude: Float,
         apiKey: String,
@@ -32,7 +32,7 @@ class RemoteDataSource {
         }
     }
 
-    suspend fun getCurrentWeather(
+    override suspend fun getCurrentWeather(
         latitude: Float,
         longitude: Float,
         apiKey: String,

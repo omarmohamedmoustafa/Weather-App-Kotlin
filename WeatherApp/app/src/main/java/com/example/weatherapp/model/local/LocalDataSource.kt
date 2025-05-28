@@ -1,49 +1,62 @@
 package com.example.weatherapp.model.local
 
-import com.example.weatherapp.model.local.fav_local.FavDao
-import com.example.weatherapp.model.local.weather_local.WeatherDao
+import com.example.weatherapp.model.pojos.Alert
 import com.example.weatherapp.model.pojos.CurrentWeatherResponse
 import com.example.weatherapp.model.pojos.FavouriteCountry
 import com.example.weatherapp.model.pojos.WeatherResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class LocalDataSource(private val weatherDao: WeatherDao,
-                      private val favDao: FavDao)  {
+class LocalDataSource(
+    private val weatherAppDao: WeatherAppDao
+): ILocalDataSource {
 
-    suspend fun saveWeatherResponse(response: WeatherResponse) = withContext(Dispatchers.IO) {
-        weatherDao.insertHourlyForecastFourDays(response)
+    override suspend fun saveWeatherResponse(response: WeatherResponse) = withContext(Dispatchers.IO) {
+        weatherAppDao.insertHourlyForecastFourDays(response)
     }
 
-    suspend fun getWeatherResponse(): WeatherResponse? = withContext(Dispatchers.IO) {
-        return@withContext weatherDao.getHourlyForecastFourDays()
+    override suspend fun getWeatherResponse(): WeatherResponse? = withContext(Dispatchers.IO) {
+        return@withContext weatherAppDao.getHourlyForecastFourDays()
     }
 
-    suspend fun clearWeatherResponse() = withContext(Dispatchers.IO) {
-        weatherDao.clearHourlyForecastFourDays()
+    override suspend fun clearWeatherResponse() = withContext(Dispatchers.IO) {
+        weatherAppDao.clearHourlyForecastFourDays()
     }
 
-    suspend fun insertFavouriteCountry(country: FavouriteCountry) = withContext(Dispatchers.IO) {
-        favDao.insertFavouriteCountry(country)
+    override suspend fun insertFavouriteCountry(country: FavouriteCountry) = withContext(Dispatchers.IO) {
+        weatherAppDao.insertFavouriteCountry(country)
     }
 
-    suspend fun getAllFavouriteCountries(): List<FavouriteCountry> = withContext(Dispatchers.IO) {
-        return@withContext favDao.getAllFavouriteCountries()
+    override suspend fun getAllFavouriteCountries(): List<FavouriteCountry> = withContext(Dispatchers.IO) {
+        return@withContext weatherAppDao.getAllFavouriteCountries()
     }
 
-    suspend fun deleteFavouriteCountry(countryName: String, countryLatitude: Float, countryLongitude: Float) = withContext(Dispatchers.IO) {
-        favDao.deleteFavouriteCountry(countryName, countryLatitude, countryLongitude)
+    override suspend fun deleteFavouriteCountry(countryName: String, countryLatitude: Float, countryLongitude: Float) = withContext(Dispatchers.IO) {
+        weatherAppDao.deleteFavouriteCountry(countryName, countryLatitude, countryLongitude)
     }
 
-    suspend fun insertCurrentWeatherResponse(response: CurrentWeatherResponse) = withContext(Dispatchers.IO) {
-        weatherDao.insertCurrentWeatherResponse(response)
+    override suspend fun insertCurrentWeatherResponse(response: CurrentWeatherResponse) = withContext(Dispatchers.IO) {
+        weatherAppDao.insertCurrentWeatherResponse(response)
     }
 
-    suspend fun getCurrentWeatherResponse(): CurrentWeatherResponse? = withContext(Dispatchers.IO) {
-        return@withContext weatherDao.getCurrentWeatherResponse()
+    override suspend fun getCurrentWeatherResponse(): CurrentWeatherResponse? = withContext(Dispatchers.IO) {
+        return@withContext weatherAppDao.getCurrentWeatherResponse()
     }
 
-    suspend fun clearCurrentWeatherResponse() = withContext(Dispatchers.IO) {
-        weatherDao.clearCurrentWeatherResponse()
+    override suspend fun clearCurrentWeatherResponse() = withContext(Dispatchers.IO) {
+        weatherAppDao.clearCurrentWeatherResponse()
+    }
+
+    override suspend fun insertAlert(alert: Alert): Long= withContext(Dispatchers.IO) {
+        return@withContext weatherAppDao.insertAlert(alert)
+    }
+    override suspend fun getAllAlerts(): List<Alert> = withContext(Dispatchers.IO) {
+        weatherAppDao.getAllAlerts()
+    }
+    override suspend fun deleteAlert(alertId: Long) = withContext(Dispatchers.IO) {
+        weatherAppDao.deleteAlert(alertId)
+    }
+    override suspend fun getAlertById(alertId: Long): Alert? = withContext(Dispatchers.IO) {
+        return@withContext weatherAppDao.getAlertById(alertId)
     }
 }

@@ -7,10 +7,9 @@
 
     <fragment
         android:id="@+id/nav_initial_setup"
-        android:name="com.example.weatherapp.ui.setup.InitialSetupFragment"
-        android:label="Initial Setup"
+        android:name="com.example.weatherapp.ui.setup.view.InitialSetupFragment"
+        android:label="@string/initial_setup"
         tools:layout="@layout/fragment_initial_setup">
-        >
         <action
             android:id="@+id/action_initialSetup_to_nav_home"
             app:destination="@id/nav_home"
@@ -23,8 +22,8 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.weatherapp.ui.home.HomeFragment"
-        android:label="Home"
+        android:name="com.example.weatherapp.ui.home.view.HomeFragment"
+        android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
         <argument
             android:name="latitude"
@@ -38,8 +37,8 @@
 
     <fragment
         android:id="@+id/nav_favourites"
-        android:name="com.example.weatherapp.ui.favourites.FavouritesFragment"
-        android:label="Favourites"
+        android:name="com.example.weatherapp.ui.favourites.view.FavouritesFragment"
+        android:label="@string/menu_favourites"
         tools:layout="@layout/fragment_favourites">
         <action
             android:id="@+id/action_nav_favourites_to_mapFragment"
@@ -51,27 +50,25 @@
 
     <fragment
         android:id="@+id/nav_map"
-        android:name="com.example.weatherapp.ui.map.MapFragment"
-        android:label="Map"
+        android:name="com.example.weatherapp.ui.map.view.MapFragment"
+        android:label="@string/Map"
         tools:layout="@layout/fragment_map_view" />
-        />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.example.weatherapp.ui.settings.SettingsFragment"
-        android:label="Settings"
-        tools:layout="@layout/fragment_settings" >
-    <action
-        android:id="@+id/action_settingsFragment_to_mapFragment"
-        app:destination="@id/nav_map" />
+        android:name="com.example.weatherapp.ui.settings.view.SettingsFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_mapFragment"
+            app:destination="@id/nav_map" />
     </fragment>
-        />
 
     <fragment
         android:id="@+id/nav_alerts"
-        android:name="com.example.weatherapp.ui.alerts.AlertsFragment"
-        android:label="Alerts"
+        android:name="com.example.weatherapp.ui.alerts.view.AlertsFragment"
+        android:label="@string/menu_alerts"
         tools:layout="@layout/fragment_alerts" />
-        />
+
 
 </navigation>

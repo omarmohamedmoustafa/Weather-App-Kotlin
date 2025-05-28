@@ -7,32 +7,36 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
+        android:name=".activities.MyApplication"
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/icon_sun"
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon_sun"
         android:supportsRtl="true"
-        android:theme="@style/Theme.WeatherApp"
-        android:usesCleartextTraffic="true"
-        tools:targetApi="28">
+        android:theme="@style/Theme.WeatherApp">
 
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.WeatherApp.NoActionBar">
+            android:name=".activities.MainActivity"
+            android:theme="@style/Theme.WeatherApp.NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <receiver android:name=".model.alert.AlertReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="FIRE_ALERT" />
+                <action android:name="DISMISS_ALERT" />
+            </intent-filter>
+        </receiver>
+
+    </application>
 </manifest>

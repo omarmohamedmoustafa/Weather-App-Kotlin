@@ -168,15 +168,11 @@ class LocationHelper(
     }
 
     private fun getAddressFromLocation(latitude: Double, longitude: Double): String? {
-        return try {
-            val geocoder = Geocoder(context)
-            val addressList = geocoder.getFromLocation(latitude, longitude, 1)
-            if (!addressList.isNullOrEmpty()) {
-                addressList[0].getAddressLine(0)
-            } else {
-                null
-            }
-        } catch (e: Exception) {
+        val geocoder = Geocoder(context)
+        val addressList = geocoder.getFromLocation(latitude, longitude, 1)
+        return if (!addressList.isNullOrEmpty()) {
+            addressList[0].getAddressLine(0)
+        } else {
             null
         }
     }
